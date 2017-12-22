@@ -70,7 +70,7 @@ def Insert():
     db.session.add(bid4)
     db.session.commit()
 
-    return "Inserted"
+    return "Inserted" + '</br></br>  <a href="#" onClick="history.go(-1);return true;"> Go Back!</a>'
 @app.route('/show')
 def Show():
     #result = Bid.query.order_by(Bid.price.desc()).first()
@@ -83,14 +83,22 @@ def Show():
         rs += str(bid.user_id) + " : " + str(bid.price) + "</br>";
 
     #print(str(result.price))
-    return rs
+    return rs + '</br></br>  <a href="#" onClick="history.go(-1);return true;"> Go Back!</a>'
+@app.route('/createall')
+def CreateBD():
+    db.create_all()
+    return 'Create all schema success </br></br>  <a href="#" onClick="history.go(-1);return true;"> Go Back!</a> '
 
+@app.route('/removeall')
+def RemoveBD():
+    db.drop_all()
+    return 'Remove all schema success </br></br>  <a href="#" onClick="history.go(-1);return true;"> Go Back!</a> '
 
 
 @app.route('/')
 def Init():
     db.create_all()
-    return "<a href='/insert'>INSERT DATA</a> </br> <a href='/show'>SHOW QUERY</a>"
+    return "<a href='/createall'>CREATE SCHEMA </a> </br> </br> <a href='/removeall'>DROP ALL SCHEMA </a> </br> </br> <a href='/insert'>INSERT DATA </a> </br> </br> <a href='/show'>SHOW QUERY</a>"
 
 
 if __name__ == '__main__':
