@@ -97,7 +97,6 @@ def RemoveBD():
 
 @app.route('/')
 def Init():
-    db.create_all()
     return "<a href='/createall'>CREATE SCHEMA </a> </br> </br> <a href='/removeall'>DROP ALL SCHEMA </a> </br> </br> <a href='/insert'>INSERT DATA </a> </br> </br> <a href='/show'>SHOW QUERY</a>"
 
 
