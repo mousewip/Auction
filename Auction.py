@@ -46,6 +46,7 @@ class Bid(db.Model):
         self.item_id = iid
         self.price = price
 
+
 @app.route('/insert')
 def Insert():
     user1 = User(1, "abc", "abc")
@@ -60,10 +61,10 @@ def Insert():
     db.session.add(baseball)
     db.session.commit()
 
-    bid1 = Bid(1, 2, 1, 25)
-    bid2 = Bid(2, 3, 1, 14)
-    bid3 = Bid(3, 2, 1, 36)
-    bid4 = Bid(4, 3, 1, 36)
+    bid1 = Bid(1, 2, 1, 25000)
+    bid2 = Bid(2, 3, 1, 14000)
+    bid3 = Bid(3, 2, 1, 36000)
+    bid4 = Bid(4, 3, 1, 30000)
     db.session.add(bid1)
     db.session.add(bid2)
     db.session.add(bid3)
@@ -73,14 +74,18 @@ def Insert():
     return "Inserted" + '</br></br>  <a href="#" onClick="history.go(-1);return true;"> Go Back!</a>'
 @app.route('/show')
 def Show():
-    #result = Bid.query.order_by(Bid.price.desc()).first()
+    result = Bid.query.order_by(Bid.price.desc()).first()
 
-    max_price = db.session.query(db.func.max(Bid.price)).scalar()
-    result = db.session.query(Bid).filter(Bid.price == max_price).all()
+    # max_price = db.session.query(db.func.max(Bid.price)).scalar()
+    # result = db.session.query(Bid).filter(Bid.price == max_price).all()
     rs = ""
-    for bid in result:
-        print("%d : %.2f" %(bid.user_id, bid.price))
-        rs += str(bid.user_id) + " : " + str(bid.price) + "</br>";
+
+    print("%d : %.2f" % (result.user_id, result.price))
+    rs += str(result.user_id) + " : " + str(result.price) + "</br>"
+
+    # for bid in result:
+    #     print("%d : %.2f" %(bid.user_id, bid.price))
+    #     rs += str(bid.user_id) + " : " + str(bid.price) + "</br>"
 
     #print(str(result.price))
     return rs + '</br></br>  <a href="#" onClick="history.go(-1);return true;"> Go Back!</a>'
