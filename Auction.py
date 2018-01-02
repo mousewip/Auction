@@ -59,22 +59,31 @@ def Insert():
 
     baseball = Items(1, "BaseBall", "abc xyz", 1)
     db.session.add(baseball)
+
+    baseball2 = Items(2, "BaseBall22", "abc xyz22", 2)
+    db.session.add(baseball2)
     db.session.commit()
 
     bid1 = Bid(1, 2, 1, 25000)
     bid2 = Bid(2, 3, 1, 14000)
     bid3 = Bid(3, 2, 1, 36000)
     bid4 = Bid(4, 3, 1, 30000)
+
+    bid5 = Bid(5, 1, 2, 40000)
     db.session.add(bid1)
     db.session.add(bid2)
     db.session.add(bid3)
     db.session.add(bid4)
+    db.session.add(bid5)
     db.session.commit()
 
     return "Inserted" + '</br></br>  <a href="#" onClick="history.go(-1);return true;"> Go Back!</a>'
 @app.route('/show')
 def Show():
-    result = Bid.query.order_by(Bid.price.desc()).first()
+    item_id = 1
+    result = Bid.query.filter(Bid.item_id == item_id).order_by(Bid.price.desc()).first()
+
+    user = User.query.filter(User.id == result.user_id).first()
 
     # max_price = db.session.query(db.func.max(Bid.price)).scalar()
     # result = db.session.query(Bid).filter(Bid.price == max_price).all()
@@ -88,7 +97,7 @@ def Show():
     #     rs += str(bid.user_id) + " : " + str(bid.price) + "</br>"
 
     #print(str(result.price))
-    return rs + '</br></br>  <a href="#" onClick="history.go(-1);return true;"> Go Back!</a>'
+    return user.username + " : " +  rs + '</br></br>  <a href="#" onClick="history.go(-1);return true;"> Go Back!</a>'
 @app.route('/createall')
 def CreateBD():
     db.create_all()
